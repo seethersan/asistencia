@@ -1,0 +1,106 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+class countries(models.Model):
+        id = models.SmallIntegerField(primary_key=True)
+        country_name = models.CharField(max_length=100, verbose_name="Pais")
+
+	def __unicode__(self):
+		return str(self.country_name)
+
+class departamento(models.Model):
+	id = models.SmallIntegerField(primary_key=True)
+	departamento_name = models.CharField(max_length=30, verbose_name="Departamento")
+	countries_id = models.ForeignKey(countries, verbose_name="Pais")
+
+        def __unicode__(self):
+                return str(self.departamento_name)
+
+class provincia(models.Model):
+	id = models.SmallIntegerField(primary_key=True)
+	provincia_name = models.CharField(max_length=70, verbose_name="Provincia")
+	departamento_id = models.ForeignKey(departamento, verbose_name="Departamento")
+
+        def __unicode__(self):
+                return str(self.provincia_name)
+
+class distrito(models.Model):
+	id = models.SmallIntegerField(primary_key=True)
+	distrito_name = models.CharField(max_length=70, verbose_name="Distrito")
+	provincia_id = models.ForeignKey(provincia, verbose_name="Provincia")
+
+        def __unicode__(self):
+                return str(self.distrito_name)
+
+class documento(models.Model):
+	id = models.SmallIntegerField(primary_key=True)
+	countries_id = models.ForeignKey(countries, verbose_name="Pais")
+	documento_name = models.CharField(max_length=30, verbose_name="Tipo de documento")
+
+        def __unicode__(self):
+                return str(self.documento_name)
+
+class empresa(models.Model):
+	id = models.SmallIntegerField(primary_key=True)
+	empresa_ruc = models.CharField(max_length=11, verbose_name="RUC")
+	empresa_name = models.CharField(max_length=40, verbose_name="Razon Social")
+	pais_id = models.ForeignKey(pais, verbose_name="Pais")
+	departamento_id = models.ForeignKey(departamento, verbose_name="Departamento")
+	provincia_id = models.ForeignKey(provincia, verbose_name="Provincia")
+	distrito_id = models.ForeignKey(distrito, verbose_name="Distrito")
+	direccion_name = models.CharField(max_lenght=50, verbose_name="Direccion")
+
+        def __unicode__(self):
+                return str(self.empresa_name)
+
+class local(models.Model):
+	id = models.SmallIntegerField(primary_key=True)
+	local_name = models.CharField(max_length=30, verbose_name="Local")
+	local_direccion = models.CharField(max_length=50, verbose_name="Direccion")
+        pais_id = models.ForeignKey(pais, verbose_name="Pais")
+        departamento_id = models.ForeignKey(departamento, verbose_name="Departamento")
+        provincia_id = models.ForeignKey(provincia, verbose_name="Provincia")
+	distrito_id = models.ForeignKey(distrito, verbose_name="Distrito")
+	empresa_id = models.ForeignKey(empresa, verbose_name="Empresa")
+
+        def __unicode__(self):
+                return str(self.local_name)
+
+class area(models.Model):
+        id = models.SmallIntegerField(primary_key=True)
+        area_name = models.CharField(max_length=30, verbose_name="Area")
+	empresa_id = models.ForeignKey(empresa, verbose_name="Empresa")
+
+        def __unicode__(self):
+                return str(self.area_name)
+
+class horario(models.Model):
+        id = models.SmallIntegerField(primary_key=True)
+        horario_name = models.CharField(max_length=30, verbose_name="Horario")
+        horario_entrada = models.TimeField(null=False, verbose_name="Hora de entrada")
+        horario_salida = models.TimeField(null=False, verbose_name="Hora de salida")
+        horario_tolerancia = models.SmallIntegerField(null=False, verbose_name="Tolerancia")
+
+        def __unicode__(self):
+                return str(self.horario_name)
+
+class empleado(models.Model):
+	id = models.SmallIntegerField(primary_key=True)
+	user = models.ForeignKey(User, verbose_name="Usuarion")
+	empleado_direccion = models.CharField(null=False,blank=False,max_length=30, verbose_name="Direccion")
+        pais_id = models.ForeignKey(pais, verbose_name="Pais")
+        departamento_id = models.ForeignKey(departamento, verbose_name="Departamento")
+        provincia_id = models.ForeignKey(provincia)
+	distrito_id = models.ForeignKey(distrito)
+	direccion_empleado = models.CharField(null=False)
+	empleado_telefono = models.CharField(null=False,blank=False,max_length=12)
+	area_id = models.ForeignKey(area)
+	documento_id = models.ForeignKey(documento)
+	empleado_nrodocumento = models.CharField(max_length=12,null=False)
+	local_id = models.ForeignKey(local)
+	horario_id = models.ForeignKey(horario)
+
+class asistencia(models.Model):
+	empleado_id = models.ForeignKey(empleado)
+	datetime = models.DateTimeField(auto_now=True)
+
