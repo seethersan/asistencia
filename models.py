@@ -49,21 +49,20 @@ class empresa(models.Model):
     departamento = ChainedForeignKey(
         departamento, 
         chained_field="pais",
-        chained_model_field="countries", 
-        show_all=False,
+        chained_model_field="countries_id", 
+        show_all=False
     )
     provincia = ChainedForeignKey(
         provincia, 
         chained_field="departamento",
-        chained_model_field="departamento", 
-        show_all=False,
+        chained_model_field="departamento_id", 
+        show_all=False
     )
     distrito = ChainedForeignKey(
-        provincia, 
+        distrito, 
         chained_field="provincia",
-        chained_model_field="provincia", 
-        show_all=False, 
-        auto_choose=True
+        chained_model_field="provincia_id", 
+        show_all=False
     )
     direccion_name = models.CharField(max_length=50, verbose_name="Direccion")
 
@@ -77,21 +76,20 @@ class local(models.Model):
     departamento = ChainedForeignKey(
         departamento, 
         chained_field="pais",
-        chained_model_field="countries", 
-        show_all=False,
+        chained_model_field="countries_id", 
+        show_all=False
     )
     provincia = ChainedForeignKey(
         provincia, 
         chained_field="departamento",
-        chained_model_field="departamento", 
-        show_all=False,
+        chained_model_field="departamento_id", 
+        show_all=False
     )
     distrito = ChainedForeignKey(
-        provincia, 
+        distrito, 
         chained_field="provincia",
-        chained_model_field="provincia", 
-        show_all=False, 
-        auto_choose=True
+        chained_model_field="provincia_id", 
+        show_all=False
     )
     empresa_id = models.ForeignKey(empresa, verbose_name="Empresa")
 
@@ -121,20 +119,20 @@ class empleado(models.Model):
     departamento = ChainedForeignKey(
         departamento, 
         chained_field="pais",
-        chained_model_field="countries", 
-        show_all=False, 
+        chained_model_field="countries_id", 
+        show_all=False
     )
     provincia = ChainedForeignKey(
         provincia, 
         chained_field="departamento",
-        chained_model_field="departamento", 
-        show_all=False,
+        chained_model_field="departamento_id", 
+        show_all=False
     )
     distrito = ChainedForeignKey(
-        provincia, 
+        distrito, 
         chained_field="provincia",
-        chained_model_field="provincia", 
-        show_all=False,
+        chained_model_field="provincia_id", 
+        show_all=False
     )
     empleado_telefono = models.CharField(null=False,blank=False,max_length=12, verbose_name="Telefono")
     area_id = models.ForeignKey(area, verbose_name="Area")
