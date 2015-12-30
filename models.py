@@ -50,15 +50,13 @@ class empresa(models.Model):
         departamento, 
         chained_field="pais",
         chained_model_field="countries", 
-        show_all=False, 
-        auto_choose=True
+        show_all=False,
     )
     provincia = ChainedForeignKey(
         provincia, 
         chained_field="departamento",
         chained_model_field="departamento", 
-        show_all=False, 
-        auto_choose=True
+        show_all=False,
     )
     distrito = ChainedForeignKey(
         provincia, 
@@ -80,15 +78,13 @@ class local(models.Model):
         departamento, 
         chained_field="pais",
         chained_model_field="countries", 
-        show_all=False, 
-        auto_choose=True
+        show_all=False,
     )
     provincia = ChainedForeignKey(
         provincia, 
         chained_field="departamento",
         chained_model_field="departamento", 
-        show_all=False, 
-        auto_choose=True
+        show_all=False,
     )
     distrito = ChainedForeignKey(
         provincia, 
@@ -127,21 +123,18 @@ class empleado(models.Model):
         chained_field="pais",
         chained_model_field="countries", 
         show_all=False, 
-        auto_choose=True
     )
     provincia = ChainedForeignKey(
         provincia, 
         chained_field="departamento",
         chained_model_field="departamento", 
-        show_all=False, 
-        auto_choose=True
+        show_all=False,
     )
     distrito = ChainedForeignKey(
         provincia, 
         chained_field="provincia",
         chained_model_field="provincia", 
-        show_all=False, 
-        auto_choose=True
+        show_all=False,
     )
     empleado_telefono = models.CharField(null=False,blank=False,max_length=12, verbose_name="Telefono")
     area_id = models.ForeignKey(area, verbose_name="Area")
